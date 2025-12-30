@@ -17,8 +17,8 @@ jobs:
         include:
           - name: dialer
             org: google-inc
-            repo: google-dialer
-            pattern: '*-pixel'
+            repo: google-phone
+            pattern: '.*-pixel'
             arch: arm64-v8a
             filename: 'Dialer-${version}.apk'
           - name: asi-pixel9
