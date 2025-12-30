@@ -1,0 +1,143 @@
+name: Update Apps
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # Daily check
+
+permissions:
+  contents: write
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: dialer
+            org: google-inc
+            repo: google-dialer
+            pattern: '.*-pixel'
+            arch: arm64-v8a
+            filename: 'Dialer-${version}.apk'
+          - name: asi-pixel9
+            org: google-inc
+            repo: device-personalization-services
+            pattern: '.*pixel9.*'
+            arch: arm64-v8a
+            filename: 'ASI-${minSDK}-Pixel-9.apk'
+          - name: asi-pixel8
+            org: google-inc
+            repo: device-personalization-services
+            pattern: '.*pixel8.*'
+            arch: arm64-v8a
+            filename: 'ASI-${minSDK}-Pixel-8.apk'
+          - name: asi-pixel7
+            org: google-inc
+            repo: device-personalization-services
+            pattern: '.*pixel7.*'
+            arch: arm64-v8a
+            filename: 'ASI-${minSDK}-Pixel-7.apk'
+
+    steps:
+      - name: Download APK
+        uses: Kingsman44/gh-apkmirror-dl@v2
+        id: download
+        with:
+          org: ${{ matrix.org }}
+          repo: ${{ matrix.repo }}
+          versionPattern: ${{ matrix.pattern }}
+          arch: ${{ matrix.arch }}
+          dpi: 'nodpi'
+          filename: ${{ matrix.filename }}
+          overwrite: true
+
+      - name: Create Metadata JSON
+        run: |
+          cat <<EOF > info.json
+          {
+            "version": "${{ steps.download.outputs.version }}",
+            "filename": "${{ steps.download.outputs.filename }}",
+            "variant": "${{ steps.download.outputs.variant }}",
+            "arch": "${{ steps.download.outputs.arch }}",
+            "dpi": "${{ steps.download.outputs.dpi }}",
+            "minSdk": "${{ steps.download.outputs.minSdk }}",
+            "signature": "${{ steps.download.outputs.signature }}",
+            "date": "${{ steps.download.outputs.date }}"
+          }
+          EOF
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}-${{ steps.download.outputs.version }}
+          path: |
+            ${{ steps.download.outputs.filename }}
+            info.json
+
+  release:
+    needs: download
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Generate Release Tag
+        id: tag
+        run: |
+          # Use date as release tag: vYYYY.MM.DD
+          # Adding hour/min to ensure uniqueness if run multiple times a day: -HHMM
+          TAG="v$(date +'%Y.%m.%d-%H%M')"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "Generated Release Tag: $TAG"
+
+      - name: Update release.json
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          RELEASE_TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          node .github/scripts/update_release.js
+
+      - name: Commit release.json
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update release.json for release ${{ steps.tag.outputs.tag }}"
+          file_pattern: release.json
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          # Construct Release Body
+          echo "## Google Apps Update ($TAG)" > release_notes.md
+          echo "" >> release_notes.md
+          
+          find artifacts -name "info.json" | while read info_file; do
+            VERSION=$(node -p "require('./$info_file').version")
+            FILENAME=$(node -p "require('./$info_file').filename")
+            VARIANT=$(node -p "require('./$info_file').variant")
+            
+            echo "- **$FILENAME** : $VERSION ($VARIANT)" >> release_notes.md
+          done
+          
+          # Create Release
+          gh release create "$TAG" --title "Google Apps Update $TAG" --notes-file release_notes.md
+          
+          # Upload Assets
+          # 1. APKs
+          find artifacts -name "*.apk" -exec gh release upload "$TAG" {} --clobber \;
+          
+          # 2. release.json (from current dir, already updated & committed)
+          gh release upload "$TAG" release.json --clobber
