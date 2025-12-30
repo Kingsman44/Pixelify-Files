@@ -1,0 +1,50 @@
+[
+  {
+    "version": "V.41.playstore.pixel7.843410720",
+    "filename": "ASI--Pixel-7.apk",
+    "variant": "Android 15+",
+    "arch": "arm64-v8a",
+    "dpi": "nodpi",
+    "minSdk": "35",
+    "signature": "",
+    "date": "",
+    "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2025.12.30-1035/ASI--Pixel-7.apk",
+    "updatedAt": "2025-12-30T10:35:52.461Z"
+  },
+  {
+    "version": "B.19.playstore.pixel8.843410720",
+    "filename": "ASI--Pixel-8.apk",
+    "variant": "Android 16+",
+    "arch": "arm64-v8a",
+    "dpi": "nodpi",
+    "minSdk": "36",
+    "signature": "",
+    "date": "",
+    "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2025.12.30-1035/ASI--Pixel-8.apk",
+    "updatedAt": "2025-12-30T10:35:52.461Z"
+  },
+  {
+    "version": "B.19.playstore.pixel9.843410720",
+    "filename": "ASI--Pixel-9.apk",
+    "variant": "Android 16+",
+    "arch": "arm64-v8a",
+    "dpi": "nodpi",
+    "minSdk": "36",
+    "signature": "",
+    "date": "",
+    "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2025.12.30-1035/ASI--Pixel-9.apk",
+    "updatedAt": "2025-12-30T10:35:52.461Z"
+  },
+  {
+    "version": "202.0.838486605-pixel",
+    "filename": "Dialer-202.0.838486605-pixel.apk",
+    "variant": "Android 11+",
+    "arch": "arm64-v8a",
+    "dpi": "nodpi",
+    "minSdk": "30",
+    "signature": "",
+    "date": "",
+    "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2025.12.30-1035/Dialer-202.0.838486605-pixel.apk",
+    "updatedAt": "2025-12-30T10:35:52.461Z"
+  }
+]
