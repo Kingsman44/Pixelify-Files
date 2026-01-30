@@ -8,8 +8,8 @@
     "minSdk": "35",
     "signature": "",
     "date": "",
-    "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2026.01.29-0234/ASI--Pixel-7.apk",
-    "updatedAt": "2026-01-29T02:34:12.214Z"
+    "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2026.01.30-0234/ASI--Pixel-7.apk",
+    "updatedAt": "2026-01-30T02:34:23.332Z"
   },
   {
     "version": "B.19.playstore.pixel8.843410720",
@@ -20,8 +20,8 @@
     "minSdk": "36",
     "signature": "",
     "date": "",
-    "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2026.01.29-0234/ASI--Pixel-8.apk",
-    "updatedAt": "2026-01-29T02:34:12.214Z"
+    "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2026.01.30-0234/ASI--Pixel-8.apk",
+    "updatedAt": "2026-01-30T02:34:23.332Z"
   },
   {
     "version": "B.19.playstore.pixel9.843410720",
@@ -32,8 +32,8 @@
     "minSdk": "36",
     "signature": "",
     "date": "",
-    "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2026.01.29-0234/ASI--Pixel-9.apk",
-    "updatedAt": "2026-01-29T02:34:12.214Z"
+    "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2026.01.30-0234/ASI--Pixel-9.apk",
+    "updatedAt": "2026-01-30T02:34:23.333Z"
   },
   {
     "version": "202.0.838486605-pixel",
@@ -106,5 +106,17 @@
     "date": "",
     "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2026.01.29-0234/Dialer-205.0.858797290-pixel.apk",
     "updatedAt": "2026-01-29T02:34:12.215Z"
+  },
+  {
+    "version": "206.0.857916353-pixel",
+    "filename": "Dialer-206.0.857916353-pixel.apk",
+    "variant": "Android 11+",
+    "arch": "arm64-v8a",
+    "dpi": "nodpi",
+    "minSdk": "30",
+    "signature": "",
+    "date": "",
+    "downloadUrl": "https://github.com/Kingsman44/Pixelify-Files/releases/download/v2026.01.30-0234/Dialer-206.0.857916353-pixel.apk",
+    "updatedAt": "2026-01-30T02:34:23.333Z"
   }
 ]
